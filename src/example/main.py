@@ -8,7 +8,7 @@ from oekoboilerapi.oekoboiler import Oekoboiler
 
 
 async def main():
-    """Example to show how it works"""
+    """Example to show how it works. Have fun!"""
     load_dotenv()
 
     boiler = Oekoboiler(
