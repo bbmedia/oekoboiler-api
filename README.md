@@ -1,6 +1,14 @@
 # oekoboiler-api
 
-oekoboiler-api is a Python library for the read out properties like current temperature from your .
+oekoboiler-api is a Python library to read out properties like current temperature from your Oekoboiler water heater.
+
+Use at your own risk! You can damage your boiler by setting wrong parameters!
+
+Home Assistant integration based on this library is coming soon.
+
+## Disclaimer
+- Use at your own risk! You can damage your boiler by setting wrong parameters!
+- This project is fully private and not affiliated with Oekoboiler or Ayla. 
 
 ## Installation
 
@@ -11,8 +19,9 @@ pip install oekoboiler-api
 ```
 
 ## Usage (see src/example/main.py)
+
 1. Update .example_env with your data and rename it to .env
-2. Run src/example/main.py to see if the connection to your Oekoboiler works. The current temperature should be printed to console.
+2. Run src/example/main.py to see if the connection to your Oekoboiler works. The current water temperature should be printed to console.
 
 ```cfg
 #Insert your credentials and rename this file to ".env" (remove "example_env"). 
@@ -74,3 +83,6 @@ Please make sure to update tests as appropriate.
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Credits
+This project was influenced by [@johnrichard](https://github.com/johannrichard)'s work.
