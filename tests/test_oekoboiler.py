@@ -27,5 +27,5 @@ class OekoboilerTestcase(unittest.IsolatedAsyncioTestCase):
         sut = Oekoboiler(ayla_service, "device_id")
 
         await sut.async_update()
-        self.assertEqual(sut.get_temp_current, c_temp)
-        self.assertEqual(sut.get_temp_set, set_temp)
+        self.assertEqual(sut.temp_c_current, c_temp)
+        self.assertEqual(sut.temp_c_set, set_temp)
