@@ -23,7 +23,9 @@ async def main():
     )
 
     await boiler.async_update()
+
     print(f"Current temperature is {boiler.temp_c_current}C°")
+    print(f"Current target temperature is {boiler.temp_c_set}C°")
 
 
 asyncio.run(main())

@@ -1,12 +1,16 @@
-import os
 import unittest
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock
 
 from aioresponses import aioresponses
 
-from oekoboilerapi.aylaservice import (AccessToken, AylaService,
-                                       LoginFailedError, NoAccessError)
+from oekoboilerapi.aylaservice import (
+    AccessToken,
+    AylaProperty,
+    AylaService,
+    LoginFailedError,
+    NoAccessError,
+)
 from tests import utils
 
 
@@ -164,3 +168,42 @@ class AylaServiceTestcase(unittest.IsolatedAsyncioTestCase):
             _ = await sut.login()
         self.assertEqual(exc.exception.message, error_msg)
         self.assertEqual(exc.exception.http_status, 401)
+
+    @aioresponses()
+    async def test_update_ok(self, post_mock):
+        """test update"""
+
+        sut = AylaService(MagicMock())
+        test_property = AylaProperty(
+            name="F103",
+            key="123",
+            data_updated_at=datetime.now(),
+            value="test",
+        )
+
+        post_mock.post(
+            url="https://user-field-eu.aylanetworks.com/users/sign_in.json",
+            status=200,
+            payload={
+                "access_token": "random_token",
+                "refresh_token": "random_refresh_token",
+                "expires_in": 86400,
+                "role": "EndUser",
+                "role_tags": [],
+            },
+        )
+
+        post_mock.post(
+            url=f"https://ads-eu.aylanetworks.com/apiv1/properties/{test_property.key}/datapoints",
+            status=201,
+            payload={
+                "datapoint": {
+                    "value": "",
+                    "metadata": {"key1": "", "key2": ""},
+                }
+            },
+        )
+
+        self.assertTrue(
+            await sut.update_property(test_property.key, test_property.value)
+        )
