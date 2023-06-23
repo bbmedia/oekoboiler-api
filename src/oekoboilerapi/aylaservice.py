@@ -196,7 +196,8 @@ class AylaService:
 
         async with ClientSession() as session:
             async with session.post(
-                f"https://ads-eu.aylanetworks.com/apiv1/properties/{ayla_prop_id}/datapoints",
+                f"https://ads-eu.aylanetworks.com/apiv1/"
+                f"properties/{ayla_prop_id}/datapoints",
                 json={
                     "datapoint": {
                         "value": f"{ayla_prop_value}",

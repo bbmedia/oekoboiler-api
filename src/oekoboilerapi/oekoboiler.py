@@ -17,7 +17,7 @@ class Oekoboiler:
         self.last_update: datetime = None
         self.boiler_data: list[AylaProperty] = []
 
-        self.update_delay_min: timedelta = timedelta(minutes=5)
+        self.update_delay_min: timedelta = timedelta(seconds=5)
 
     async def async_update(self):
         """update current values from Ayla cloud"""
@@ -34,6 +34,8 @@ class Oekoboiler:
 
     async def set_target_temp(self, target_temp_c: int):
         """Sets the target temp in C°"""
+        self.last_update = None
+
         return await self.service.update_property_by_name(
             self.boiler_data, self.PROP_NAME_TEMP_SET, target_temp_c
         )
