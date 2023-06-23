@@ -37,7 +37,9 @@ class Oekoboiler:
         self.last_update = None
 
         return await self.service.update_property_by_name(
-            self.boiler_data, self.PROP_NAME_TEMP_SET, target_temp_c
+            self.boiler_data,
+            self.PROP_NAME_TEMP_SET,
+            int(round(target_temp_c)),
         )
 
     @property
