@@ -53,6 +53,7 @@ class AccessToken:
 @dataclass
 class AylaProperty:
     """Wraps the most important values of an Ayla property"""
+
     name: str
     value: str
     key: str
@@ -157,6 +158,13 @@ class AylaService:
         )
         return json
 
+    async def get_dsns_info(self, dsn):
+        """get dsns ifno for current Ayla account"""
+        json = await self.request(
+            "https://ads-eu.aylanetworks.com/apiv1/dsns/{dsn}"
+        )
+        return json
+
     async def get_properties(self, dsn: str):
         """get properties for specific device from Ayla cloud"""
         json = await self.request(
@@ -186,6 +194,25 @@ class AylaService:
                 )
             )
         return props
+
+    async def register_device(self, dsn: str):
+        headers = await self.get_json_header_with_token()
+        print(f"register device with dsn: {dsn}!")
+
+        async with ClientSession() as session:
+            async with session.post(
+                "https://ads-eu.aylanetworks.com/apiv1/devices",
+                json={
+                    "device": {
+                        "dsn": f"{dsn}",
+                    }
+                },
+                headers=headers,
+            ) as resp:
+                if resp.status:
+                    print(resp)
+                    return True
+                return False
 
     async def update_property(
         self, ayla_prop_id: str, ayla_prop_value: any
